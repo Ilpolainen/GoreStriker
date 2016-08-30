@@ -1,5 +1,5 @@
 ### Ipin tuntikirjanpito
-Päivä | Tunnit | Kuvaus
------------------------
+PÃ¤ivÃ¤ | Tunnit | Kuvaus
+-------- | --- | --------------
 29.8.16 | 2h | projektisuunnittelua
-30.8.16 | 4h | työympäristön pystyttäminen ja laitehankinnat
+30.8.16 | 4h | tyÃ¶ympÃ¤ristÃ¶n pystyttÃ¤minen ja laitehankinnat
