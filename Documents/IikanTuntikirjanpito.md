@@ -1,4 +1,4 @@
-### Ipin tuntikirjanpito
+### Iikan tuntikirjanpito
 Päivä | Tunnit | Kuvaus
 -------- | --- | ------------
 29.8.16 | 2h | projektisuunnittelua
