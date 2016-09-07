@@ -1,62 +1,24 @@
 fileFormatVersion: 2
-guid: 449e46515795fce4fae5b59a0eda368f
-timeCreated: 1473097009
+guid: e289419d69a58c646a0c50c537a842b3
+timeCreated: 1473247233
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Armature
-    100002: Head
-    100004: LeftArm_L
-    100006: LeftElbow_L
-    100008: LeftFoot_L
-    100010: LeftHips_L
-    100012: LeftKnee_L
-    100014: //RootNode
-    100016: Mesh
-    100018: MiddleSpine
-    100020: Pelvis
-    100022: RightArm_R
-    100024: RightElbow_R
-    100026: RightFoot_R
-    100028: RightHips_R
-    100030: RightKnee_R
-    100032: Mesh_001
-    100034: Mesh_002
-    100036: Mesh_003
-    100038: Mesh_004
+    100002: //RootNode
+    100004: Mesh_001
+    100006: RightArm_R
+    100008: RightElbow_R
     400000: Armature
-    400002: Head
-    400004: LeftArm_L
-    400006: LeftElbow_L
-    400008: LeftFoot_L
-    400010: LeftHips_L
-    400012: LeftKnee_L
-    400014: //RootNode
-    400016: Mesh
-    400018: MiddleSpine
-    400020: Pelvis
-    400022: RightArm_R
-    400024: RightElbow_R
-    400026: RightFoot_R
-    400028: RightHips_R
-    400030: RightKnee_R
-    400032: Mesh_001
-    400034: Mesh_002
-    400036: Mesh_003
-    400038: Mesh_004
-    4300000: Mesh
-    4300002: Mesh_001
-    4300004: Mesh_002
-    4300006: Mesh_004
-    4300008: Mesh_003
+    400002: //RootNode
+    400004: Mesh_001
+    400006: RightArm_R
+    400008: RightElbow_R
+    4300000: Mesh_001
     7400000: Default Take
     9500000: //RootNode
-    13700000: Mesh
-    13700002: Mesh_001
-    13700004: Mesh_002
-    13700006: Mesh_003
-    13700008: Mesh_004
+    13700000: Mesh_001
   materials:
     importMaterials: 1
     materialName: 0
