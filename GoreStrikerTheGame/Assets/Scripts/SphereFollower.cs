@@ -15,8 +15,6 @@ public class SphereFollower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		rb.AddForce (thrust * (target.transform.position - transform.position + Vector3.up*4));
-		print ("Target y = " + targetPos.position.y + ", vahennetaan = " + transform.position.y + 3);
-
+		rb.AddForce (thrust * (target.transform.position - transform.position));
 	}
 }

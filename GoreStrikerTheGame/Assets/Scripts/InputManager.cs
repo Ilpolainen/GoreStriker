@@ -25,9 +25,7 @@ public static class InputManager {
 		} else {
 			rightStickInput = rightStickInput.normalized * ((rightStickInput.magnitude - deadZoneAmount) / (1 - deadZoneAmount));
 		}
-
-		Debug.Log (rightStickInput);
-
+			
 		return rightStickInput;
 	}
 }

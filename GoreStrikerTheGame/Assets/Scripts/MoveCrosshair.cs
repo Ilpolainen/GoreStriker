@@ -19,7 +19,7 @@ public class MoveCrosshair : MonoBehaviour {
 	}
 
 	void GetJoystickInput() {
-		joystickInput = InputManager.GetLeftStickInput ();
+		joystickInput = InputManager.GetRightStickInput ();
 	}
 
 	void UpdateCrosshairLocation() {
