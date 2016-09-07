@@ -22,11 +22,9 @@ public class RotateTowards : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		targetDirection = target.transform.position - transform.position;
-		localTarget = transform.InverseTransformPoint (target.transform.position);
+		targetDirection = new Vector3 (target.transform.position.x, transform.position.y, target.transform.position.z) - transform.position;
+		localTarget = transform.InverseTransformPoint (new Vector3 (target.transform.position.x, transform.position.y, target.transform.position.z));
 		angle = Mathf.Atan2 (localTarget.x, localTarget.z) * Mathf.Rad2Deg;
-
-		print (localTarget.magnitude);
 
 		eulerAngleVelocity = new Vector3 (0,0, angle);
 		deltaRotation = Quaternion.Euler (eulerAngleVelocity * Time.deltaTime);

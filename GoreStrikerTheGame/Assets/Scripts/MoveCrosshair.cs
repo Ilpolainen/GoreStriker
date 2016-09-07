@@ -6,6 +6,9 @@ public class MoveCrosshair : MonoBehaviour {
 	public GameObject characterCenter;
 	Transform characterCenterPosition;
 	Vector2 joystickInput;
+	Vector3 newPosition;
+
+	float height;
 
 	// Use this for initialization
 	void Start () {
@@ -15,6 +18,7 @@ public class MoveCrosshair : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		GetJoystickInput ();
+		GetHeightInput ();
 		UpdateCrosshairLocation();
 	}
 
@@ -22,8 +26,21 @@ public class MoveCrosshair : MonoBehaviour {
 		joystickInput = InputManager.GetRightStickInput ();
 	}
 
+	void GetHeightInput() {
+		if (InputManager.GetRightShoulderButtonInput ()) {
+			height = 6;
+		} else if (InputManager.GetRightTriggerInput ()) {
+			height = -4;
+		} else {
+			height = 3;
+		}
+	}
+
 	void UpdateCrosshairLocation() {
-		transform.position = characterCenterPosition.position + new Vector3 (joystickInput.x, 0, joystickInput.y).normalized * 3;
+		newPosition = characterCenterPosition.position + new Vector3 (joystickInput.x, 0, joystickInput.y).normalized * 4;
+		newPosition.y = height;
+
+		transform.position = newPosition;
 	}
 
 
