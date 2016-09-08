@@ -5,6 +5,7 @@ public class MoveCharacter : MonoBehaviour {
 
 	Vector2 leftJoystickInput;
 	Vector2 rightJoystickInput;
+	public float topSpeed;
 	float differenceInInputs;
 	float compensation;
 
@@ -37,7 +38,10 @@ public class MoveCharacter : MonoBehaviour {
 
 	void AddMovementForce() {
 		movementVector = new Vector3 (leftJoystickInput.x, 0, leftJoystickInput.y);
-		rb.AddForce (movementVector * forceMultiplier * compensation);
+
+		if (rb.velocity.magnitude < topSpeed) {
+			rb.AddForce (movementVector * forceMultiplier * compensation);
+		}
 		print (rb.velocity.magnitude);
 	}
 }
