@@ -1,24 +1,22 @@
 fileFormatVersion: 2
-guid: e289419d69a58c646a0c50c537a842b3
-timeCreated: 1473247233
+guid: ac1219e344c381a45b38b087eec19309
+timeCreated: 1473604290
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: Armature
     100002: //RootNode
-    100004: Mesh_001
-    100006: RightArm_R
-    100008: RightElbow_R
+    100004: Mesh_006
+    100006: RightElbow_R
     400000: Armature
     400002: //RootNode
-    400004: Mesh_001
-    400006: RightArm_R
-    400008: RightElbow_R
-    4300000: Mesh_001
+    400004: Mesh_006
+    400006: RightElbow_R
+    4300000: Mesh_006
     7400000: Default Take
     9500000: //RootNode
-    13700000: Mesh_001
+    13700000: Mesh_006
   materials:
     importMaterials: 1
     materialName: 0

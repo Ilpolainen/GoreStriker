@@ -5,53 +5,54 @@ public static class Departer : object {
 
 
 
-	public static void cut(GameObject departedLimp, GameObject invisibleLimp, GameObject mesh) {
+	public static void cut(GameObject departedLimb, GameObject originalLimb, GameObject mesh) {
 		//Leikkaa jointit
-		Departer.cutJoints(departedLimp);
+		cutJoints(departedLimb);
 		//Asettaa massat oikein
-		Departer.setMasses(departedLimp, invisibleLimp);
+		setMasses(departedLimb, originalLimb);
 		//Asettaa Colliderit oikein
-		Departer.setColliders(departedLimp, invisibleLimp);
+		setColliders(departedLimb, originalLimb);
 		//VaihtaaMeshiennäkyvyydet
-		Departer.changeMeshes(departedLimp, mesh);
+		changeMeshes(departedLimb, mesh);
 	}	
 
-	private static void cutJoints(GameObject limp){
-		
-		Component[] joints = limp.GetComponentsInChildren<FixedJoint> ();
-		foreach (FixedJoint joint in joints) {
-			Component.Destroy(joint);
-		}
+	public static void handleChild(GameObject departedChildLimb, GameObject childLimb, GameObject childMesh) {
+		//Leikkaa vain fixedJointin
+		Component.Destroy(departedChildLimb.GetComponent<FixedJoint> ());
+		setMasses (departedChildLimb, childLimb);
+		setColliders (departedChildLimb, childLimb);
+		changeMeshes (departedChildLimb, childMesh);
 	}
 
-	private static void setMasses(GameObject departedLimp, GameObject invisibleLimp){
-		Rigidbody[] bodies = departedLimp.GetComponentsInChildren<Rigidbody> ();
-		foreach (Rigidbody r  in bodies) {
-			r.mass = 1;
-			r.useGravity = true;
-		}
-		invisibleLimp.GetComponent<Rigidbody> ().mass = 0.1f;
+	private static void cutJoints(GameObject limb){
+		Component.Destroy(limb.GetComponent<FixedJoint> ());
+		Component.Destroy (limb.GetComponent<CharacterJoint> ());
 	}
 
-	private static void setColliders(GameObject departedLimp, GameObject invisibleLimp){
-		Collider[] departedColliders = departedLimp.GetComponentsInChildren<Collider> ();
+	private static void setMasses(GameObject departedLimb, GameObject originalLimb){
+		Rigidbody body = departedLimb.GetComponent<Rigidbody> ();
+		body.mass = 1;
+		body.useGravity = true;
+		originalLimb.GetComponent<Rigidbody> ().mass = 0.01f;
+	}
+
+	private static void setColliders(GameObject departedLimb, GameObject originalLimb){
+		Collider[] departedColliders = departedLimb.GetComponents<Collider> ();
 		foreach (Collider col in departedColliders) {
 			col.enabled = true;
-
 		}
-		Collider[] invisibleColliders = invisibleLimp.GetComponentsInChildren<Collider> ();
+		Collider[] invisibleColliders = originalLimb.GetComponents<Collider> ();
 		foreach (Collider col in invisibleColliders) {
 			col.enabled = false;
 		}
 	}
 
-	private static void changeMeshes(GameObject departedLimp, GameObject mesh){
-		GameObject armature = departedLimp.transform.parent.gameObject;
-
-		Renderer[] renderers = armature.transform.GetComponentsInChildren<Renderer> ();
+	private static void changeMeshes(GameObject departedLimb, GameObject mesh){
+		GameObject armature = departedLimb.transform.parent.gameObject;
+		Renderer[] renderers = armature.transform.GetComponentsInChildren<Renderer>();
 		foreach (Renderer r in renderers) {
 			r.enabled = true;
 		}
-		mesh.GetComponentInChildren<Renderer> ().enabled = false;
+		mesh.GetComponent<Renderer> ().enabled = false;
 	}
 }
