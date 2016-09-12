@@ -24,8 +24,10 @@ public class SphereFollower : MonoBehaviour {
 		} else {
 			thrust = originalThrust;
 		}
-			
-		rb.AddForce (thrust * (target.transform.position - transform.position));
+
+		if (InputManager.GetRightStickInput ().magnitude > 0.5) {
+			rb.AddForce (thrust * (target.transform.position - transform.position));
+		}
 
 		thrust = originalThrust;
 	}
