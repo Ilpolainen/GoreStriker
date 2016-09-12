@@ -4,6 +4,7 @@ using System.Collections;
 public class SphereFollower : MonoBehaviour {
 
 	public float thrust;
+	private float originalThrust;
 	public GameObject target;
 	private Transform targetPos;
 	private Rigidbody rb;
@@ -11,12 +12,21 @@ public class SphereFollower : MonoBehaviour {
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
 		targetPos = target.transform;
+
+		originalThrust = thrust;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		rb.AddForce (thrust * (target.transform.position - transform.position + Vector3.up*4));
-		print ("Target y = " + targetPos.position.y + ", vahennetaan = " + transform.position.y + 3);
 
+		if (InputManager.GetLeftShoulderButtonInput ()) {
+			thrust = thrust * 2f;
+		} else {
+			thrust = originalThrust;
+		}
+			
+		rb.AddForce (thrust * (target.transform.position - transform.position));
+
+		thrust = originalThrust;
 	}
 }
