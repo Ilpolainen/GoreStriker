@@ -41,7 +41,6 @@ public class MoveCharacter : MonoBehaviour {
 
 		if (rb.velocity.magnitude < topSpeed) {
 			rb.AddForce (movementVector * forceMultiplier * compensation);
-			print (rb.velocity.magnitude);
 		}
 
 	}

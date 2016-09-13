@@ -7,6 +7,7 @@ public class MoveCrosshair : MonoBehaviour {
 	Transform characterCenterPosition;
 	Vector2 joystickInput;
 	Vector3 newPosition;
+	Vector3 previousInput;
 
 	float height;
 
@@ -20,10 +21,14 @@ public class MoveCrosshair : MonoBehaviour {
 		GetJoystickInput ();
 		GetHeightInput ();
 		UpdateCrosshairLocation();
+		previousInput = joystickInput;
 	}
 
 	void GetJoystickInput() {
 		joystickInput = InputManager.GetRightStickInput ();
+		if (joystickInput.magnitude < 0.5f) {
+			joystickInput = previousInput;
+		}
 	}
 
 	void GetHeightInput() {
