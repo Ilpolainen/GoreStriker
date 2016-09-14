@@ -42,8 +42,6 @@ public class SphereFollower : MonoBehaviour {
 
 		rb.AddForce (thrust * (target.transform.position - transform.position));
 
-		print ((thrust * (target.transform.position - transform.position)).magnitude); 
-
 		thrust = originalThrust;
 	}
 }

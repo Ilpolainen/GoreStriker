@@ -46,9 +46,11 @@ public class MoveCrosshair : MonoBehaviour {
 	void GetHeightInput() {
 		if (InputManager.GetRightShoulderButtonInput (playerName)) {
 			height = 6;
+			print ("R1 pressed");
 		} else if (InputManager.GetRightTriggerInput (playerName)) {
 			height = -4;
-		} else {
+			print ("R2 pressed");
+		} else if (!InputManager.GetRightTriggerInput(playerName)) {
 			height = 3;
 		}
 	}
