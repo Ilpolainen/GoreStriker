@@ -17,10 +17,22 @@ public class MoveCharacter : MonoBehaviour {
 	public GameObject crosshair;
 	private MoveCrosshair crosshairMovement;
 
+	string playerName;
+
 	// Use this for initialization
 	void Start () {
 		rb = GetComponent<Rigidbody> ();
 		crosshairMovement = crosshair.GetComponent<MoveCrosshair> ();
+
+		if (gameObject.tag == "Player1") {
+			playerName = "P1";
+		} else if (gameObject.tag == "Player2") {
+			playerName = "P2";
+		} else if (gameObject.tag == "Player3") {
+			playerName = "P3";
+		} else if (gameObject.tag == "Player4") {
+			playerName = "P4";
+		}
 	}
 
 	// Update is called once per frame
@@ -31,7 +43,7 @@ public class MoveCharacter : MonoBehaviour {
 	}
 
 	void GetJoystickInput() {
-		leftJoystickInput = InputManager.GetLeftStickInput ();
+		leftJoystickInput = InputManager.GetLeftStickInput (playerName);
 		crossHairLocation = crosshairMovement.GetCrosshairLocation ();
 	}
 

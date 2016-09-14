@@ -11,9 +11,21 @@ public class MoveCrosshair : MonoBehaviour {
 
 	float height;
 
+	public GameObject parentArmature;
+	string playerName;
+
 	// Use this for initialization
 	void Start () {
 		characterCenterPosition = characterCenter.transform;
+		if (parentArmature.gameObject.tag == "Player1") {
+			playerName = "P1";
+		} else if (parentArmature.gameObject.tag == "Player2") {
+			playerName = "P2";
+		} else if (parentArmature.gameObject.tag == "Player3") {
+			playerName = "P3";
+		} else if (parentArmature.gameObject.tag == "Player4") {
+			playerName = "P4";
+		}
 	}
 	
 	// Update is called once per frame
@@ -25,16 +37,16 @@ public class MoveCrosshair : MonoBehaviour {
 	}
 
 	void GetJoystickInput() {
-		joystickInput = InputManager.GetRightStickInput ();
+		joystickInput = InputManager.GetRightStickInput (playerName);
 		if (joystickInput.magnitude < 0.5f) {
 			joystickInput = previousInput;
 		}
 	}
 
 	void GetHeightInput() {
-		if (InputManager.GetRightShoulderButtonInput ()) {
+		if (InputManager.GetRightShoulderButtonInput (playerName)) {
 			height = 6;
-		} else if (InputManager.GetRightTriggerInput ()) {
+		} else if (InputManager.GetRightTriggerInput (playerName)) {
 			height = -4;
 		} else {
 			height = 3;
