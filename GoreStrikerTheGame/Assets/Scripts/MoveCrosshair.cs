@@ -41,6 +41,10 @@ public class MoveCrosshair : MonoBehaviour {
 		}
 	}
 
+	public Vector2 GetCrosshairLocation() {
+		return joystickInput;
+	}
+
 	void UpdateCrosshairLocation() {
 		newPosition = characterCenterPosition.position + new Vector3 (joystickInput.x, 0, joystickInput.y).normalized * 4;
 		newPosition.y = height;
