@@ -16,9 +16,16 @@ public class WeaponHitEmpower : MonoBehaviour {
 	int forceCooldownPassed;
 	int forceCooldown = 5;
 
+	ReceiveDamage victimReceiveDamage;
+	bool hitConnectedBody;
+	bool victimReadyForAnotherDamageBlow;
+	string victimsBodypart;
+	float damageForce;
+
 	// Use this for initialization
 	void Start () {
 		weaponRigidbody = GetComponent<Rigidbody> ();
+		victimReadyForAnotherDamageBlow = true;
 	}
 	
 	// Update is called once per frame
@@ -29,12 +36,25 @@ public class WeaponHitEmpower : MonoBehaviour {
 
 	void FixedUpdate() {
 		if (weaponMadeContact) {
+			// HUOM! Kerrotaanko empoweredHitVector tarkoituksella kaksi kertaa multiplierilla? Sekä tässä, että vektorin tallennuksessa OnCollisionEnterissä. Poista, jos kommentti turha.
 			victimRigidbody.AddForce (empoweredHitVector * extraPowerMultiplier);
-			print ("Adding BOW POWER");
+			//print ("Adding BOW POWER");
+
+			if (hitConnectedBody & victimReadyForAnotherDamageBlow) {
+				DamageVictim ();
+				victimReadyForAnotherDamageBlow = false;
+			}
+
 			if (forceCooldownPassed > forceCooldown) {
 				weaponMadeContact = false;
+				hitConnectedBody = false;
+				victimReadyForAnotherDamageBlow = true;
 			}
 		}
+	}
+
+	void DamageVictim() {
+		victimReceiveDamage.HitReceived (victimsBodypart, damageForce);
 	}
 
 	void OnCollisionEnter(Collision col) {
@@ -43,10 +63,20 @@ public class WeaponHitEmpower : MonoBehaviour {
 				victimRigidbody = col.gameObject.GetComponent<Rigidbody> ();
 				forceCooldownPassed = 0;
 				weaponMadeContact = true;
+
 				if (col.gameObject.tag != "Weapon") {
 					empoweredHitVector = weaponRigidbody.velocity * extraPowerMultiplier;
+
+					victimReceiveDamage = col.gameObject.GetComponentInParent<ReceiveDamage> ();
+					hitConnectedBody = true;
+					victimsBodypart = col.gameObject.tag;
+					damageForce = weaponRigidbody.velocity.magnitude;
+					//print ("mihin osui: " + victimsBodypart);
+					//print ("paljonko osui: " + damageForce);
+
 				} else {
 					empoweredHitVector = weaponRigidbody.velocity * extraPowerMultiplier * 0.5f;
+					hitConnectedBody = false;
 				}
 			}
 			cooldownPassed = 0;
