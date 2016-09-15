@@ -60,4 +60,12 @@ public static class InputManager {
 			return false;
 		}
 	}
+
+	public static bool GetLeftStickButtonInput(string playerName) {
+		if (Input.GetButtonDown(playerName + "LeftStickButton")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

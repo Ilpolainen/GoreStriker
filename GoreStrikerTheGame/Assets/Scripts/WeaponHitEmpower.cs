@@ -6,10 +6,15 @@ public class WeaponHitEmpower : MonoBehaviour {
 	public float extraPowerMultiplier;
 	Rigidbody weaponRigidbody;
 
-
 	int cooldownPassed;
 	int cooldown = 30;
 
+	bool weaponMadeContact;
+
+	Rigidbody victimRigidbody;
+	Vector3 empoweredHitVector;
+	int forceCooldownPassed;
+	int forceCooldown = 5;
 
 	// Use this for initialization
 	void Start () {
@@ -18,14 +23,31 @@ public class WeaponHitEmpower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		cooldownPassed = cooldownPassed + 1;
+		cooldownPassed++;
+		forceCooldownPassed++;
+	}
+
+	void FixedUpdate() {
+		if (weaponMadeContact) {
+			victimRigidbody.AddForce (empoweredHitVector * extraPowerMultiplier);
+			print ("Adding BOW POWER");
+			if (forceCooldownPassed > forceCooldown) {
+				weaponMadeContact = false;
+			}
+		}
 	}
 
 	void OnCollisionEnter(Collision col) {
 		if (gameObject.layer - 1 != col.gameObject.layer && col.gameObject.layer != 16) {
 			if (cooldownPassed > cooldown) {
-				print ("BOW: " + (weaponRigidbody.velocity.magnitude * extraPowerMultiplier));
-				col.gameObject.GetComponent<Rigidbody> ().AddForce (weaponRigidbody.velocity * extraPowerMultiplier);
+				victimRigidbody = col.gameObject.GetComponent<Rigidbody> ();
+				forceCooldownPassed = 0;
+				weaponMadeContact = true;
+				if (col.gameObject.tag != "Weapon") {
+					empoweredHitVector = weaponRigidbody.velocity * extraPowerMultiplier;
+				} else {
+					empoweredHitVector = weaponRigidbody.velocity * extraPowerMultiplier * 0.5f;
+				}
 			}
 			cooldownPassed = 0;
 

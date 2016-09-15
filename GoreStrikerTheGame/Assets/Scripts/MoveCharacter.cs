@@ -11,8 +11,15 @@ public class MoveCharacter : MonoBehaviour {
 	Vector3 compensationVector;
 
 	Vector3 movementVector;
+	Vector3 evasionVector;
+
+	bool evasionInProgress;
+	float evasionDuration = 0.3f;
+	float evasionDurationPassed = 0;
+
 	Rigidbody rb;
-	public float forceMultiplier;
+	public float movementForceMultiplier;
+	public float evasionForceMultiplier;
 
 	public GameObject crosshair;
 	private MoveCrosshair crosshairMovement;
@@ -35,10 +42,14 @@ public class MoveCharacter : MonoBehaviour {
 		}
 	}
 
-	// Update is called once per frame
 	void Update () {
 		GetJoystickInput ();
+	}
+		
+	void FixedUpdate() {
 		CalculateCompensation ();
+		EvasiveStep ();
+		DetermineMovementVector ();
 		AddMovementForce ();
 	}
 
@@ -54,13 +65,37 @@ public class MoveCharacter : MonoBehaviour {
 
 	}
 
+	void EvasiveStep() {
+		if (!evasionInProgress && InputManager.GetLeftStickButtonInput (playerName)) {
+			evasionInProgress = true;
+			evasionVector = (transform.up + new Vector3(0,0.5f,0)) * 10;
+		} 
+
+		if (evasionInProgress) {
+			evasionDurationPassed = evasionDurationPassed + Time.deltaTime;
+
+			if (evasionDurationPassed > evasionDuration) {
+				evasionDurationPassed = 0;
+				evasionInProgress = false;
+			}
+		}
+	}
+
+	void DetermineMovementVector() {
+		if (evasionInProgress) {
+			movementVector = evasionVector;
+		} else {
+			movementVector = new Vector3 (leftJoystickInput.x, 0, leftJoystickInput.y);
+		}
+	}
+
 	void AddMovementForce() {
-		movementVector = new Vector3 (leftJoystickInput.x, 0, leftJoystickInput.y);
 		rb.AddForce (compensationVector * 200);
 		if (rb.velocity.magnitude < topSpeed) {
 			//rb.AddForce (movementVector * forceMultiplier * compensation);
-			rb.AddForce(movementVector * forceMultiplier);
+			rb.AddForce(movementVector * movementForceMultiplier);
 		}
 
 	}
+
 }
