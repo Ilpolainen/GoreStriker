@@ -7,33 +7,64 @@ public class MoveCrosshair : MonoBehaviour {
 	Transform characterCenterPosition;
 	Vector2 joystickInput;
 	Vector3 newPosition;
+	Vector3 previousInput;
 
 	float height;
+
+	public GameObject parentArmature;
+	string playerName;
 
 	// Use this for initialization
 	void Start () {
 		characterCenterPosition = characterCenter.transform;
+		if (parentArmature.gameObject.tag == "Player1") {
+			playerName = "P1";
+		} else if (parentArmature.gameObject.tag == "Player2") {
+			playerName = "P2";
+		} else if (parentArmature.gameObject.tag == "Player3") {
+			playerName = "P3";
+		} else if (parentArmature.gameObject.tag == "Player4") {
+			playerName = "P4";
+		}
+
+		joystickInput = new Vector2 (0, 1);
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		previousInput = joystickInput;
+
 		GetJoystickInput ();
 		GetHeightInput ();
 		UpdateCrosshairLocation();
 	}
 
 	void GetJoystickInput() {
-		joystickInput = InputManager.GetRightStickInput ();
+		joystickInput = InputManager.GetRightStickInput (playerName);
+		if (joystickInput.magnitude < 0.5f) {
+			joystickInput = previousInput;
+		}
 	}
 
 	void GetHeightInput() {
-		if (InputManager.GetRightShoulderButtonInput ()) {
-			height = 6;
-		} else if (InputManager.GetRightTriggerInput ()) {
-			height = -4;
-		} else {
+		if (!InputManager.GetRightTriggerInput(playerName) && !InputManager.GetRightShoulderButtonInput(playerName)) {
 			height = 3;
 		}
+
+		if (InputManager.GetRightShoulderButtonInput (playerName)) {
+			height = 6;
+			//print ("R1 pressed by : " + playerName);
+		} 
+
+		if (InputManager.GetRightTriggerInput (playerName)) {
+			height = -4;
+			//print ("R2 pressed by : " + playerName);
+		} 
+	}
+
+	public Vector2 GetCrosshairLocation() {
+		return joystickInput;
 	}
 
 	void UpdateCrosshairLocation() {

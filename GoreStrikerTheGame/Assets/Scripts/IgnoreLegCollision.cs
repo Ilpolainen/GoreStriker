@@ -19,6 +19,7 @@ public class IgnoreLegCollision : MonoBehaviour {
 		Physics.IgnoreCollision (lowerBodyBox, leftLowerLeg);
 		Physics.IgnoreCollision (lowerBodyBox, rightUpperLeg);
 		Physics.IgnoreCollision (lowerBodyBox, rightLowerLeg);
+
 	}
 	
 	// Update is called once per frame
