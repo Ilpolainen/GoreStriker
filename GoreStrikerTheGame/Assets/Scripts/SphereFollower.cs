@@ -3,12 +3,19 @@ using System.Collections;
 
 public class SphereFollower : MonoBehaviour {
 
+	public GameObject leftElbow;
+	public GameObject rightElbow;
+	private Rigidbody leftElbowRigidbody;
+	private Rigidbody rightElbowRigidbody;
+
 	public float thrust;
 	private float originalThrust;
 	public GameObject target;
 	private Vector3 targetLocation;
 	private Transform targetPos;
-	private Rigidbody rb;
+
+	private Vector3 deadzoneHelper;
+	private Vector3 newTarget;
 
 	bool powerThrustGoing;
 	float powerThrustDuration = 0.3f;
@@ -20,23 +27,23 @@ public class SphereFollower : MonoBehaviour {
 
 	public float powerThrustMaximumMultiplier;
 
-	public GameObject parentArmature;
 	string playerName;
 
 	// Use this for initialization
 	void Start () {
-		rb = GetComponent<Rigidbody> ();
+		leftElbowRigidbody = leftElbow.GetComponent<Rigidbody> ();
+		rightElbowRigidbody = rightElbow.GetComponent<Rigidbody> ();
 		targetPos = target.transform;
 
 		originalThrust = thrust;
 
-		if (parentArmature.gameObject.tag == "Player1") {
+		if (gameObject.tag == "Player1") {
 			playerName = "P1";
-		} else if (parentArmature.gameObject.tag == "Player2") {
+		} else if (gameObject.tag == "Player2") {
 			playerName = "P2";
-		} else if (parentArmature.gameObject.tag == "Player3") {
+		} else if (gameObject.tag == "Player3") {
 			playerName = "P3";
-		} else if (parentArmature.gameObject.tag == "Player4") {
+		} else if (gameObject.tag == "Player4") {
 			playerName = "P4";
 		}
 
@@ -45,12 +52,14 @@ public class SphereFollower : MonoBehaviour {
 
 	void Update() {
 		GetTarget ();
+		ApplyDeadzone ();
 		CheckPowerThrust ();
 	}
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		rb.AddForce (thrust * (targetLocation - transform.position));
+		leftElbowRigidbody.AddForce (thrust * (targetLocation - leftElbow.transform.position));
+		rightElbowRigidbody.AddForce (thrust * (targetLocation - rightElbow.transform.position));
 	}
 
 	void GetTarget() {
@@ -59,11 +68,22 @@ public class SphereFollower : MonoBehaviour {
 		}
 	}
 
+	//vielä ihan kesken :)
+	void ApplyDeadzone() {
+		deadzoneHelper = transform.InverseTransformPoint (targetLocation);
+		print (deadzoneHelper);
+
+		if (deadzoneHelper.y < 2.5f) {
+
+		}
+
+	}
+
 	void CheckPowerThrust() {
 		if (InputManager.GetLeftShoulderButtonInput (playerName) && powerThrustGoing == false) {
 			powerThrustGoing = true;
-			thrust = thrust * powerThrustMaximumMultiplier * powerThrustCooldownPassed/powerThrustCooldown;
-			print ("POWERTHRUST started with multiplier: " + powerThrustMaximumMultiplier * powerThrustCooldownPassed/powerThrustCooldown);
+			thrust = originalThrust * powerThrustMaximumMultiplier * powerThrustCooldownPassed/powerThrustCooldown;
+			print (playerName + "POWERTHRUST started with multiplier: " + powerThrustMaximumMultiplier * powerThrustCooldownPassed/powerThrustCooldown);
 			powerThrustCooldownPassed = 0;
 		}
 

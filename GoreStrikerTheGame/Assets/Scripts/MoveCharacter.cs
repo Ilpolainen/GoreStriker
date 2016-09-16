@@ -68,7 +68,8 @@ public class MoveCharacter : MonoBehaviour {
 	void EvasiveStep() {
 		if (!evasionInProgress && InputManager.GetLeftStickButtonInput (playerName)) {
 			evasionInProgress = true;
-			evasionVector = (transform.up + new Vector3(0,0.5f,0)) * 10;
+			evasionVector = (transform.up + new Vector3(0,0.5f,0)) * evasionForceMultiplier;
+			print ("Evasion started");
 		} 
 
 		if (evasionInProgress) {

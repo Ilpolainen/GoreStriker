@@ -37,7 +37,7 @@ public class WeaponHitEmpower : MonoBehaviour {
 	void FixedUpdate() {
 		if (weaponMadeContact) {
 			// HUOM! Kerrotaanko empoweredHitVector tarkoituksella kaksi kertaa multiplierilla? Sekä tässä, että vektorin tallennuksessa OnCollisionEnterissä. Poista, jos kommentti turha.
-			victimRigidbody.AddForce (empoweredHitVector * extraPowerMultiplier);
+			victimRigidbody.AddForce (empoweredHitVector);
 			//print ("Adding BOW POWER");
 
 			if (hitConnectedBody & victimReadyForAnotherDamageBlow) {
