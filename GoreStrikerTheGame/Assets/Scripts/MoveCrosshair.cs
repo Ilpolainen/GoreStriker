@@ -34,17 +34,20 @@ public class MoveCrosshair : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		previousInput = joystickInput;
-
 		GetJoystickInput ();
 		GetHeightInput ();
 		UpdateCrosshairLocation();
 	}
 
 	void GetJoystickInput() {
-		joystickInput = InputManager.GetRightStickInput (playerName);
+		joystickInput = InputManager.GetRightStickInput (playerName).normalized;
 		if (joystickInput.magnitude < 0.5f) {
 			joystickInput = previousInput;
 		}
+	}
+
+	void LerpInput() {
+
 	}
 
 	void GetHeightInput() {
@@ -68,10 +71,15 @@ public class MoveCrosshair : MonoBehaviour {
 	}
 
 	void UpdateCrosshairLocation() {
-		newPosition = characterCenterPosition.position + new Vector3 (joystickInput.x, 0, joystickInput.y).normalized * 4;
+
+		newPosition = characterCenterPosition.position + new Vector3 (joystickInput.x, 0, joystickInput.y) * 4;
+
+
+
 		newPosition.y = height;
 
 		transform.position = newPosition;
+
 	}
 
 

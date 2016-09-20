@@ -58,8 +58,8 @@ public class SphereFollower : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		leftElbowRigidbody.AddForce (thrust * (targetLocation - leftElbow.transform.position));
-		rightElbowRigidbody.AddForce (thrust * (targetLocation - rightElbow.transform.position));
+		AddForceToElbows ();
+		//AlternativeAddForceToElbows ();
 	}
 
 	void GetTarget() {
@@ -68,10 +68,29 @@ public class SphereFollower : MonoBehaviour {
 		}
 	}
 
+	void AddForceToElbows() {
+		leftElbowRigidbody.AddForce (thrust * (targetLocation - leftElbow.transform.position));
+		rightElbowRigidbody.AddForce (thrust * (targetLocation - rightElbow.transform.position));
+	}
+
+	void AlternativeAddForceToElbows() {
+		if (leftElbowRigidbody.velocity.magnitude < 12) {
+			leftElbowRigidbody.AddForce (thrust * (targetLocation - leftElbow.transform.position));
+		} else {
+			leftElbowRigidbody.AddForce (thrust / 4 * (targetLocation - leftElbow.transform.position));
+		}
+
+		if (rightElbowRigidbody.velocity.magnitude < 12) {
+			rightElbowRigidbody.AddForce (thrust * (targetLocation - rightElbow.transform.position));
+		} else {
+			rightElbowRigidbody.AddForce (thrust / 4 * (targetLocation - rightElbow.transform.position));
+		}
+	}
+
 	//vielä ihan kesken :)
 	void ApplyDeadzone() {
 		deadzoneHelper = transform.InverseTransformPoint (targetLocation);
-		print (deadzoneHelper);
+//		print (deadzoneHelper);
 
 		if (deadzoneHelper.y < 2.5f) {
 
@@ -83,7 +102,7 @@ public class SphereFollower : MonoBehaviour {
 		if (InputManager.GetLeftShoulderButtonInput (playerName) && powerThrustGoing == false) {
 			powerThrustGoing = true;
 			thrust = originalThrust * powerThrustMaximumMultiplier * powerThrustCooldownPassed/powerThrustCooldown;
-			print (playerName + "POWERTHRUST started with multiplier: " + powerThrustMaximumMultiplier * powerThrustCooldownPassed/powerThrustCooldown);
+//			print (playerName + "POWERTHRUST started with multiplier: " + powerThrustMaximumMultiplier * powerThrustCooldownPassed/powerThrustCooldown);
 			powerThrustCooldownPassed = 0;
 		}
 
@@ -93,7 +112,7 @@ public class SphereFollower : MonoBehaviour {
 				powerThrustGoing = false;
 				powerThrustDurationPassed = 0;
 				thrust = originalThrust;
-				print ("POWERTHRUST ended");
+//				print ("POWERTHRUST ended");
 			}
 		}
 

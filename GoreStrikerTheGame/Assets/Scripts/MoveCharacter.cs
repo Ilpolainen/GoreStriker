@@ -60,7 +60,7 @@ public class MoveCharacter : MonoBehaviour {
 
 	void CalculateCompensation() {
 		//differenceInInputs = (leftJoystickInput - crossHairLocation).magnitude;
-		//compensation = 1 + differenceInInputs * 0.5f;
+		compensation = 1 + differenceInInputs * 0.5f;
 		compensationVector = new Vector3(-crossHairLocation.x, 0 , -crossHairLocation.y);
 
 	}
@@ -69,7 +69,7 @@ public class MoveCharacter : MonoBehaviour {
 		if (!evasionInProgress && InputManager.GetLeftStickButtonInput (playerName)) {
 			evasionInProgress = true;
 			evasionVector = (transform.up + new Vector3(0,0.5f,0)) * evasionForceMultiplier;
-			print ("Evasion started");
+//			print ("Evasion started");
 		} 
 
 		if (evasionInProgress) {
@@ -91,10 +91,10 @@ public class MoveCharacter : MonoBehaviour {
 	}
 
 	void AddMovementForce() {
-		rb.AddForce (compensationVector * 200);
+		rb.AddForce (compensationVector * 400);
 		if (rb.velocity.magnitude < topSpeed) {
-			//rb.AddForce (movementVector * forceMultiplier * compensation);
-			rb.AddForce(movementVector * movementForceMultiplier);
+			rb.AddForce (movementVector * movementForceMultiplier * compensation);
+			//rb.AddForce(movementVector * movementForceMultiplier);
 		}
 
 	}

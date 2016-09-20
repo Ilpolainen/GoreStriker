@@ -32,14 +32,14 @@ public class Movement : MonoBehaviour {
 		if (switcher) {
 			cfLeft.force = new Vector3 (0, 200, 0);
 			cfRight.force = Vector3.zero;
-			print ("left");
+//			print ("left");
 		} else if (switcher2) {
 			cfLeft.force = Vector3.zero;
 			cfRight.force = Vector3.zero;
 		} else if (switcher3) {
 			cfRight.force = new Vector3 (0, 200, 0);
 			cfLeft.force = Vector3.zero;
-			print ("right");
+//			print ("right");
 		} else {
 			cfLeft.force = Vector3.zero;
 			cfRight.force = Vector3.zero;
